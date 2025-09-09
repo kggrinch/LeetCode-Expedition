@@ -1,0 +1,41 @@
+# IDEA files
+.idea/
+*.iml
+
+# CMake build folders
+cmake-build-debug/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+*.cmake
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# compiled files
+*.exe
+*.out
+*.o
+*.obj
+*.so
+*.dll
+*.class
+*.jar
+
+# Logs
+*.log
+
+# Ignore everything else by default
+*
+
+# But allow source files
+# ignore everything
+# allow directories
+* 
+!*/       
+!*.cpp
+!*.c
+!*.h
+!*.hpp
+!*.java
