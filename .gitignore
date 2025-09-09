@@ -27,14 +27,3 @@ Thumbs.db
 # Logs
 *.log
 
-# Ignore everything else
-*
-
-# Allow directories (so Git can recurse)
-!*/
-
-# Allow only source files
-!*.cpp
-!*.c
-!*.h
-!*.hpp
