@@ -1,0 +1,7 @@
+*          # ignore everything
+!*/        # allow directories
+!*.cpp
+!*.c
+!*.h
+!*.hpp
+!*.java
