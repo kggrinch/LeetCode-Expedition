@@ -33,6 +33,8 @@ struct Tree
     TreeNode* root;
 };
 
+// Time Complexity: O(n) - visiting every node
+// Space Complexity: O(logn) - avg case on balanced trees | O(n) - worse max recursive depth is height of the tree
 TreeNode* invertTree(TreeNode* root)
 {
     if(root == nullptr) return nullptr;
@@ -42,7 +44,6 @@ TreeNode* invertTree(TreeNode* root)
     root->left = invertTree(r_t);
     return root;
 }
-
 
 int main()
 {
