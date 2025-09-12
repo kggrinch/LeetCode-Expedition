@@ -56,6 +56,35 @@ TreeNode* lowestCommonAncestor_Optimized(TreeNode* root, TreeNode* p, TreeNode* 
     }
 }
 
+// Recursive Approach
+// Time Complexity: Worst case O(h) - traverse every node on skewed trees - Average case O(logn) - height of the tree not all nodes
+// Space Complexity: Worse case O(h) - recursive will go as deep as the height of the tree | Average case (logn) - recursion will go as deep as the height of a balanced tree
+TreeNode* lowestCommonAncestor2(TreeNode* root, TreeNode* p, TreeNode* q)
+{
+    while(root)
+    {
+        if(p->val < root->val && q->val < root->val) return lowestCommonAncestor2(root->left, p, q);
+        if(p->val > root->val && q->val > root->val) return lowestCommonAncestor2(root->right, p, q);
+        return root;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main()
 {
     std::vector<int> tree_list1 = {5,3,8,1,4,7,9};
@@ -66,7 +95,7 @@ int main()
     TreeNode* desc1 = new TreeNode(3);
     TreeNode* desc2 = new TreeNode(4);
 
-    std::cout << lowestCommonAncestor_Optimized(tree.root, desc1, desc2)->val << "\n";
+    std::cout << lowestCommonAncestor2(tree.root, desc1, desc2)->val << "\n";
 
     return 0;
 }
