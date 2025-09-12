@@ -42,6 +42,20 @@ bool isSameTree(TreeNode* p, TreeNode* q)
     return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
 }
 
+// Practice
+// Time Complexity: worse case O(n + m) (n=nodes first tree, m=nodes second tree) - check every node
+// Space Complexity: worse case O(h, f) (h=tree1 height, f=tree2=height)- recursive depth as the height of the tree | average case O(logh, logf) - recursive depth split tree
+bool isSameTree2(TreeNode* p, TreeNode* q)
+{
+    // Check if both roots are nullptr = return same
+    if(!(p) && !(q)) return true;
+    // Check if one of the roots is a nullptr or if the values of roots don't match = return false
+    if(!(p) || !(q) || p->val != q->val) return false;
+    // Check same conditions on the roots left and right children
+    return (isSameTree2(p->left, q->left) && isSameTree2(p->right, q->right));
+}
+
+
 
 int main()
 {
@@ -50,7 +64,7 @@ int main()
     Tree tree, tree2;
     tree.createTree(tree_list1);
     tree2.createTree(tree_list2);
-    std::cout << isSameTree(tree.root, tree2.root) << "\n";
+    std::cout << isSameTree2(tree.root, tree2.root) << "\n";
 
     return 0;
 }
