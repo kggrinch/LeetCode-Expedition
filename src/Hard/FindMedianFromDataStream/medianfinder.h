@@ -13,8 +13,8 @@ public:
     double findMedian();
 
 private:
-    std::priority_queue<int, std::greater<int>> small;
-    std::priority_queue<int> large;
+    std::priority_queue<int> small; // Smallest max heap
+    std::priority_queue<int, std::vector<int>, std::greater<int>> large; // Largest min heap
 };
 
 
