@@ -1,0 +1,68 @@
+[What is Backtracking?]
+
+Definition: Backtracking is a recursive problem-solving technique that explores all possible configurations of a solution,
+“backtracks” when a partial solution is invalid, and tries alternatives.
+
+Process:
+    1. Choose a decision (make a move).
+
+    2. Recurse to explore further.
+
+    3. If the solution is invalid or complete, backtrack (undo the move).
+
+Backtracking is often described as DFS (Depth-First Search) on a decision tree.
+
+
+[Decision Trees in Backtracking]
+
+Each node = one recursive state.
+Each edge = a choice (include/exclude, place/not place, etc.).
+Each leaf = a complete solution or a dead end.
+
+Backtracking systematically explores this tree.
+
+
+[Time Complexity of Backtracking]
+
+To estimate complexity: Time≈(b) ^ d where b = number of recursive branching per function call | d = worse case depth of the recursive tree
+
+da
+
+Subsets Problem (n elements)
+
+    Branching factor = 2 (include/exclude).
+    Depth = n.
+    Time: 𝑂(2^𝑛)
+
+Permutations Problem (n elements)
+
+Branching factor ≈ n (choose 1 of n, then 1 of n-1, etc.).
+Depth = n.
+Time: 𝑂(𝑛!)
+
+Combination Sum (target = t, min element = m)
+
+Branching factor = 2 (take/skip).
+Depth ≈ t/m (how many times we can add the smallest number).
+Time: O(2^t/m)
+
+N-Queens (N x N board)
+
+Branching factor ≈ N (try each column in a row).
+Depth = N (one queen per row).
+Time: O(N!) in the worst case.
+
+
+[Space Complexity]
+Call stack depth = O(max depth).
+Extra space for current solution path = proportional to depth.
+
+Output space (if storing all solutions) can dominate — e.g. storing all subsets requires O( (2^n) ⋅ n ).
+
+When Formula Doesn’t Apply
+
+Binary Search: not backtracking — only explores 1 branch → O(logn).
+
+Dynamic Programming with memoization: avoids exploring duplicate states → complexity = number of unique states × cost per state.
+
+So the exponential formula applies mainly to pure exploration problems (subsets, permutations, N-Queens, Sudoku, etc.).
