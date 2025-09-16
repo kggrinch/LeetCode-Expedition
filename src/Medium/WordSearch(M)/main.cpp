@@ -4,91 +4,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <algorithm>
-
-
-// My trial
-// void exist_helper(std::vector<std::vector<char>>& board, std::string word, std::string& word_builder,
-//     std::vector<std::pair<int, int>>& board_coordinates, std::pair<int, int> current_coordinate,
-//     int row_size, int column_size, int& current_word_index)
-// {
-//     //                                              up             down          left            right
-//     std::vector<std::pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
-//     int x_c = current_coordinate.first;
-//     int y_c = current_coordinate.second;
-//     char letter_at_current_coordinate = board[x_c][y_c];
-//     word_builder.push_back(letter_at_current_coordinate);
-//     current_word_index++;
-//
-//
-//     for(auto [x, y] : directions)
-//     {
-//         int dx =  x_c + x;
-//         int dy =  y_c + y;
-//         if(dx >= 0 && dx < row_size && dy >= 0 && dy < column_size && (word[current_word_index] == board[dx][dy]))
-//         {
-//
-//             board_coordinates.push_back({dx, dy});
-//             return exist_helper(board, word, word_builder, board_coordinates, {dx, dy}, row_size, column_size, current_word_index);
-//         }
-//     }
-// }
-//
-//
-// bool exist(std::vector<std::vector<char>>& board, std::string word)
-// {
-//     // plan.
-//     // Create a string that will build the word from the board. iF the word is built the word exists
-//     // Use pair to hold coordinates
-//     // Use a dfs starting at source
-//     // use vector with pair to check four sides. Means we need to save range of row and column of the board
-//     // Use a hashmap with a pair<int, int>(coordinate) and a char to check for already visited chars
-//
-//     // 1. Iterate the board and find first char in the board from the word and store its coordinate to the grid
-//     // 2. use a recursive method. pass in the board, building string, the word, the directions vector, pass in index of next char in the word
-//     // 3. Base case at the end return if no correct letter found
-//     // 3. if correct letter found call recusive method with the next letters coordinate
-//     // 4. after the recursion ends check if the built word matches the passed in word. If it matches return true otherwise return false
-//
-//
-//     char start_char = word[0];
-//     int row_size = board.size();
-//     int column_size = board[0].size();
-//     std::string word_builder = "";
-//     int current_word_index = 0;
-//
-//     // <row, column>
-//     std::vector<std::pair<int, int>> board_coordinates;
-//     bool break_for_loop = false;
-//
-//
-//     for(int i = 0; i < row_size; i++)
-//     {
-//         if(break_for_loop)
-//         {
-//             break;
-//         }
-//             for(int j = 0; j < column_size; j++)
-//             {
-//                 if(start_char == board[i][j])
-//                 {
-//                     board_coordinates.push_back({i, j});
-//                     break_for_loop = true;
-//                     break;
-//                 }
-//             }
-//     }
-//
-//     // std::pair<int, int> current_coordinate = board_coordinates[0];
-//
-//     exist_helper(board, word, word_builder, board_coordinates, board_coordinates[0], row_size, column_size, current_word_index);
-//
-//
-//     if(word_builder == word)
-//     {
-//         return true;
-//     }
-//     return false;
-// }
+#include <set>
 
 
 bool exist(std::vector<std::vector<char>>& board, std::string word)
@@ -135,7 +51,7 @@ bool exist(std::vector<std::vector<char>>& board, std::string word)
 
         // If the first letter appears more then the last letter reverse.
         // This is used because we can quickly return false when letter do not repeat a lot.
-        // For example in the case where is liek AAAAAABB
+        // For example in the case where is like AAAAAABB
         // We can find the word faster starting from BBAAAAA because BB will return false faster then starting at AAAAABB
         if (count[word[0]] > count[word[word.length() - 1]]) {
             std::reverse(word.begin(), word.end());
@@ -151,6 +67,146 @@ bool exist(std::vector<std::vector<char>>& board, std::string word)
 
         return false;
 }
+
+
+// Brute Force Solution
+// Time Complexity: n * 4^m | where n - number of first chars of word in board | where m - length of the word
+// Space Complexity: m | depth - up to length of the word and worse case set holds m inputs
+bool exist2(std::vector<std::vector<char>>& board, std::string word)
+{
+    int x_length = board.size();
+    int y_length = board[0].size();
+    std::pair<int, int> start; // n
+    std::set<std::pair<int, int>> path; // m
+    std::string cur_word;
+
+    auto backtrack = [&](std::pair<int, int> index, std::string cur_word, int word_index, auto& backtrack) -> bool
+    {
+        if(cur_word == word) return true;
+
+        // If index coordinate index is out of bounds or letter does not equal the required letter or coordinate index already in use return false
+        if(index.first < 0 || index.first >= x_length || index.second < 0 || index.second >= y_length || board[index.first][index.second] != word[word_index] || path.count(index) >= 1) return false;
+        char letter = board[index.first][index.second];
+        cur_word += letter;
+        path.insert(index);
+        int first_original = index.first;
+        int second_original = index.second;
+        bool found = false;
+
+        std::pair<int, int> left(0, -1);
+        index.first = index.first + left.first;
+        index.second = index.second + left.second;
+        if(backtrack(index, cur_word, word_index + 1, backtrack)) found = true;
+
+        index = {first_original, second_original};
+        std::pair<int, int> top(-1, 0);
+        index.first = index.first + top.first;
+        index.second = index.second + top.second;
+        if(!found && backtrack(index, cur_word, word_index + 1, backtrack)) found = true;
+
+        index = {first_original, second_original};
+        std::pair<int, int> right(0, 1);
+        index.first = index.first + right.first;
+        index.second = index.second + right.second;
+        if (!found && backtrack(index, cur_word, word_index + 1, backtrack)) return true;
+
+        index = {first_original, second_original};
+        std::pair<int, int> bottom(1, 0);
+        index.first = index.first + bottom.first;
+        index.second = index.second + bottom.second;
+        if(!found && backtrack(index, cur_word, word_index + 1, backtrack)) return true;
+        index = {first_original, second_original};
+
+        path.erase(index);
+        return found;
+    };
+
+    // n
+    for(int i = 0; i < x_length; i++)
+    {
+        for(int j = 0; j < y_length; j++)
+        {
+            if(word[0] == board[i][j])
+            {
+                start = {i, j};
+                if(backtrack(start, cur_word, 0, backtrack)) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+// Time Complexity: O(n * 4^m) | n = number of cells and m = size of the word
+// Space Complexity: O(m) | m = size of the word also max depth of recursive tree and max inputs held in set.
+bool exist3(std::vector<std::vector<char>>& board, std::string word)
+{
+
+    // Save set to hold visited coordinates
+    std::set<std::pair<int, int>> visited;
+
+    // save column and row lengths of board
+    int c_length = board.size();
+    int r_length = board[0].size();
+
+    auto backtracking = [&](std::pair<int, int> point, int i, auto& backtracking) -> bool
+    {
+        // Save current coordinate point
+        int c = point.first;
+        int r = point.second;
+
+        // Check if index reached the end. means we reached the last char in word return true
+        if(i == word.size()) return true;
+        // Check if current point is valid. If point is out of bounds || char at current point does not match with char at current index || current point already visited return false
+        if(c < 0 || c >= c_length || r < 0 || r >= r_length || board[c][r] != word[i] || visited.count({c, r}) == 1) return false;
+
+        // Save current point in visited and check the four adjacent neighbors
+        visited.insert(point); // log n
+        // Short circuit bool - if one returns true a path is found, do not need to check the rest.
+        // left | top | right | bottom
+        bool res = (backtracking({c, r - 1}, i + 1, backtracking) ||
+                    backtracking({c - 1, r}, i + 1, backtracking) ||
+                    backtracking({c, r + 1}, i + 1, backtracking) ||
+                    backtracking({c + 1, r}, i + 1, backtracking));
+        visited.erase(point); // erase point on backtrack - if path found does not matter | log n
+        return res;
+    };
+
+    // *To pass LeetCode time exceed uncomment this code
+    // // Count the number of instances each letter has in the word
+    // std::unordered_map<char, int> count;
+    //
+    // for (char letter : word) {
+    //     count[letter]++;
+    // }
+    //
+    // // If the first letter appears more then the last letter reverse.
+    // // This is used because we can quickly return false when letter do not repeat a lot.
+    // // For example in the case where is like AAAAAABB
+    // // We can find the word faster starting from BBAAAAA because BB will return false faster then starting at AAAAABB
+    // if (count[word[0]] > count[word[word.length() - 1]]) {
+    //     std::reverse(word.begin(), word.end());
+    // }
+    //***************************************************
+
+
+    // Iterate through the board and only call backtracking on coordinates
+    // that start with the first char in word.
+    for(int i = 0; i < c_length; i++)
+    {
+        for(int j = 0; j < r_length; j++)
+        {
+            if(word[0] == board[i][j])
+            {
+                // If backtracking returns true we found a path
+                if(backtracking({i, j}, 0, backtracking)) return true;
+            }
+        }
+    }
+    // path not found return false
+    return false;
+}
+
 
 
 
@@ -171,7 +227,7 @@ int main()
     };
 
     std::string word = "AAB";
-    bool exists = exist(board2, word);
+    bool exists = exist3(board2, word);
 
     if(exists)
     {
