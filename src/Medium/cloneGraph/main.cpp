@@ -3,6 +3,8 @@
 #include <deque>
 #include <unordered_set>
 #include <variant>
+#include <set>
+#include <unordered_map>
 
 struct Node {
 public:
@@ -22,41 +24,32 @@ public:
     }
 };
 
-
+// Time Complexity: O(n) where n = vertices + edges
+// Space Complexity: O(n + m) where n = all old nodes and m = all new nodes
 Node* cloneGraph(Node* node)
 {
-    std::deque<Node*> q_original;
-    std::unordered_set<Node*> visited_original;
-    std::unordered_set<Node*> visited_new;
-    std::deque<Node*> q_new;
+    // If graph is empty return nullptr
+    if(!node) return nullptr;
 
-    q_original.push_back(node);
-    visited_original.insert(node);
-
-    Node* new_node = nullptr;
-    q_original.push_back(new_node);
-    visited_original.insert(new_node);
-
-    while(!(q_original.empty()) && !(q_new.empty()))
+    // Keep track of old and new nodes
+    std::unordered_map<Node*, Node*> map;
+    auto dfs = [&](Node* node, auto& dfs) -> Node*
     {
-        Node* cur_node = q_original.front();
-        if(!q_new.front()) Node* new_node = new Node(cur_node->val);
-        else Node* new_node = q_new.front();
-        q_original.pop_back();
-        q_new.pop_back();
+        // if new node already exists return it
+        if(map.count(node) == 1) return map[node]; // Note: ide < C++20 does not include map.contains() function so use map.count()
 
-        for(Node* neighbor : cur_node->neighbors)
+        // If new node does not exist create it, store it into the map, and recurse its neighbors
+        Node* new_node = new Node(node->val);
+        map[node] = new_node;
+        for(Node* neighbor : node->neighbors)
         {
-            if(visited_original.count(neighbor) != 1)
-            {
-                visited_original.insert(neighbor);
-                q_original.push_back(neighbor);
-
-                new_node->neighbors.push_back(new Node(neighbor->val));
-            }
+            new_node->neighbors.push_back(dfs(neighbor, dfs));
         }
-    }
-    return new_node;
+        // return new_node after saving neighbors
+        return new_node;
+    };
+
+    return dfs(node, dfs);
 }
 
 
@@ -66,9 +59,11 @@ int main()
     Node vertex1(1);
     Node vertex2(2);
     Node vertex3(3);
+    Node vertex4(4);
 
     std::vector<Node*> v1_neighbors;
     v1_neighbors.push_back(&vertex2);
+    v1_neighbors.push_back(&vertex4);
 
     std::vector<Node*> v2_neighbors;
     v2_neighbors.push_back(&vertex1);
@@ -76,10 +71,17 @@ int main()
 
     std::vector<Node*> v3_neighbors;
     v3_neighbors.push_back(&vertex2);
+    v3_neighbors.push_back(&vertex4);
+
+    std::vector<Node*> v4_neighbors;
+    v4_neighbors.push_back(&vertex1);
+    v4_neighbors.push_back(&vertex3);
+
 
     vertex1.neighbors = v1_neighbors;
     vertex2.neighbors = v2_neighbors;
     vertex3.neighbors = v3_neighbors;
+    vertex4.neighbors = v4_neighbors;
 
     Node* second_graph = cloneGraph(&vertex1);
     return 0;
