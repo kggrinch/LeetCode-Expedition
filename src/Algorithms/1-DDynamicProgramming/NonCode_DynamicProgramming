@@ -1,0 +1,87 @@
+1. What is Dynamic Programming?
+
+Dynamic Programming is a problem-solving technique used to solve problems that can be broken down into overlapping subproblems
+and have an optimal substructure. It is essentially a way to optimize recursive solutions by storing the results of subproblems and
+reusing them, instead of recalculating them multiple times.
+
+Note:
+* DP is both a technique and a mindset: think about breaking problems into subproblems and reusing solutions.
+* It’s widely used in optimization problems, counting problems, and problems where you need the best/maximum/minimum answer.
+
+2. Properties of Dynamic Programming Problems
+
+    1. Overlapping Subproblems
+        - The problem can be divided into smaller subproblems which repeat multiple times
+        - Without DP, solving these recursively would involve redundant computations
+        - Example Fib Sequence:
+            f(5) - f(4) - f(3)
+            f(4) - f(3) - f(2)
+            f(3) - repeats
+
+    2. Optimal Substructure
+        - The solution to a problem can be constructed from the solutions of its subproblems
+        - Example: shortest path in a graph
+            shortest_path(start, end) = min(shortest_path(start, mid) + shortest_path(mid, end))
+
+3. Types of Dynamic Programming
+
+    a. Top-down (Memoization)
+        - Start with the original problem and solve it recursively
+        - Store the results of subproblems in a lookup table (array, hashmap, ect) to avoid repeated computation
+        - Get answer, save for next time
+        - Pros: Easy to implement, mirrors recursion
+        - Cons: Can have function call overhead due to recursion
+
+    b. Bottom-up (Tabulation)
+        - Solve smaller subproblems first, then combine them to solve larger problems iteratively
+        - Usually implemented with loops and array.
+        - Solve smaller pieces first, then build up the solution
+        - Pros: No recursion overhead, often faster
+        - Cons: More complex implementation, can require careful planning of iteration order
+
+4. Steps to Solve Dynamic Programming Problems
+    1. Identify if it has overlapping subproblems and optimal substructure.
+    2. Define the states
+    3. Write the recurrence relation / transition formula – how do subproblems combine?
+    4. Decide the approach – Top-down (recursion + memoization) or Bottom-up (iterative tabulation).
+    5. Initialize base cases - smallest subproblems whose answers are known.
+    6. Compute and store results – either recursively or iteratively.
+    7. Return the final answer – typically stored in dp[n] or equivalent.
+
+5. How to Identify Dynamic Programming Problems
+    - Look for recursion-like patterns in the problem
+    - Problems involves “best / minimum / maximum / count” decisions
+    - Problem asks “number of ways” or “optimal value”.
+    - Subproblems are repeated in a recursive solution.
+    - Examples:
+        * Fibonacci numbers
+        * Climbing stairs
+        * Knapsack problem
+        * Longest Common Subsequence (LCS)
+        * Coin Change problem
+        * Minimum Path Sum in a grid
+
+6. Dynamic Programming Patterns
+    1. 1-D (Linear) Dynamic Programming on sequences (arrays, strings)
+        - Examples: Fibonacci, Climbing stairs, Maximum sum subarray
+
+    2. 2-D Dynamic Programming on grids, graphs, and tables
+        - Examples: Minimum path sum, LCS
+
+    3. Interval Dynamic Programming on sub arrays / sub intervals
+        - Examples: Matrix chain multiplication
+
+    4. Subset / Bitmask Dynamic Programming on subsets of elements
+        - Example: Traveling Salesman problem, subset sum
+
+7. Advantages of DP
+    - Reduces time complexity drastically by avoiding repeated work.
+    - Turns exponential recursive solutions into polynomial time solutions.
+    - Makes solving complex optimization problems feasible.
+
+8. Tips / Tricks
+    - Start small: Solve small examples manually to identify patterns.
+    - State carefully: The choice of state variables determines success.
+    - Draw a table: Helps to visualize how subproblems depend on each other.
+    - Think iteratively first: Even if writing recursion, imagine filling a table bottom-up.
+    - Practice classic problems: Knapsack, Coin Change, LCS, Grid DP, Staircase DP.
