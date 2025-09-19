@@ -50,6 +50,7 @@ void bfs_adjacency_list_standard(int start, std::vector<std::vector<int>>& adj)
 // Secondly Implementation: Queue + Set
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void bfs_adjacency_list_secondary(int start, std::vector<std::vector<int>>& adj)
 {
     std::unordered_set<int> visited;
@@ -115,6 +116,7 @@ void bfs_matrix_standard(int start, std::vector<std::vector<int>>& matrix)
 // Secondary Implementation: Queue + Set
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void bfs_matrix_secondary(int start, std::vector<std::vector<int>>& matrix)
 {
     int vertices = matrix.size();
@@ -188,6 +190,7 @@ void bfs_grid_standard(std::pair<int, int> start, std::vector<std::vector<int>>&
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses pairs but in a unique way where we retrieve the two values in the pair and uses them separately
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void bfs_grid_secondary(std::pair<int, int> start, std::vector<std::vector<int>>& grid)
 {
     int r = grid.size();
@@ -258,6 +261,7 @@ void dfs_adjacency_list_standard_helper(int node, const std::vector<std::vector<
 
 // Adjacency List
 // dfs adjacency list helper recursive function with (Set visited)
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_adjacency_list_secondary_helper(int node, const std::vector<std::vector<int>>& adj, std::unordered_set<int>& visited)
 {
     visited.insert(node);
@@ -290,6 +294,7 @@ void dfs_matrix_standard_helper(int node, const std::vector<std::vector<int>>& m
 
 // Matrix
 // dfs matrix helper recursive function with (Set visited)
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_matrix_secondary_helper(int node, const std::vector<std::vector<int>>& matrix, std::unordered_set<int>& visited)
 {
     visited.insert(node);
@@ -330,6 +335,7 @@ void dfs_grid_standard_helper(std::pair<int, int> node, const std::vector<std::v
 
 // Grid
 // dfs matrix helper recursive function with (Set visited)
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_grid_secondary_helper(std::pair<int, int> node, const std::vector<std::vector<int>>& grid, std::set<std::pair<int, int>>& visited)
 {
     int r = grid.size();
@@ -380,6 +386,7 @@ void dfs_adjacency_list_standard(int start, const std::vector<std::vector<int>>&
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses the 1st design
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_adjacency_list_secondary(int start, std::vector<std::vector<int>> adj)
 {
     std::unordered_set<int> visited;
@@ -406,6 +413,7 @@ void dfs_matrix_standard(int start, const std::vector<std::vector<int>>& matrix)
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses the 2nd design
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_matrix_secondary(int start, const std::vector<std::vector<int>>& matrix)
 {
     std::unordered_set<int> visited;
@@ -449,6 +457,7 @@ void dfs_grid_standard(std::pair<int, int> start, const std::vector<std::vector<
 // Pros: No fixed size needed and works well if graph nodes are not continuous labels, but are arbitrary label (like strings, large ids, or node objects)
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses the 2nd design
+// Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
 void dfs_grid_secondary(std::pair<int, int> start, const std::vector<std::vector<int>>& grid)
 {
     int r = grid.size();
