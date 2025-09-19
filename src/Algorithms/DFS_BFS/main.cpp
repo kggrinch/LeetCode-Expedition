@@ -475,9 +475,6 @@ void dfs_grid_secondary(std::pair<int, int> start, const std::vector<std::vector
 }
 
 
-
-
-
 int main()
 {
     // Graph template
@@ -570,7 +567,6 @@ int main()
     bfs_grid_secondary(start, grid);
     std::cout << "\n\n";
 
-
     //? Depth First Search
 
     //* Depth First Search (Graph - Adjacency List)
@@ -606,8 +602,6 @@ int main()
     std::cout << "secondary Implementation: Queue + Set\n";
     dfs_grid_secondary(start, grid);
     std::cout << "\n\n";
-
-
 
     return 0;
 }
