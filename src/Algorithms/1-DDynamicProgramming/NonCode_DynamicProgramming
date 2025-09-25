@@ -85,3 +85,4 @@ Note:
     - Draw a table: Helps to visualize how subproblems depend on each other.
     - Think iteratively first: Even if writing recursion, imagine filling a table bottom-up.
     - Practice classic problems: Knapsack, Coin Change, LCS, Grid DP, Staircase DP.
+    - Learn Recurrence Relation
