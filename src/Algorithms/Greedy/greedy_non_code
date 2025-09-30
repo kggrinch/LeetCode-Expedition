@@ -1,0 +1,73 @@
+Greedy Algorithm
+
+1. What is a greedy algorithm?
+    * A greedy algorithm is a problem-solving method that builds a solution step by step, always choosing the best local
+      option (the “greedy choice”) at each stage.
+    * The hope is that these local optimal choices will lead to a global optimal solution.
+    * Key phrase: “Take the best option now, don’t worry about the future — and hope it works out.”
+
+2. Core Idea
+    1. Start with an empty solution
+    2. At each step, choose the option that looks best right now (based on some rule/criteria).
+    3. Add that choice to your solution.
+    4. Repeat until the solution is complete or no choices remain.
+
+3. When to use a greedy algorithm?
+   A greedy algorithm works only if the problem satisfies two properties:
+        1. Greedy Choice Property
+            * A global optimal solution can be reached by choosing a local optimum.
+            * In other words: picking the best local step never "blocks" you from reaching the best possible full solution.
+
+        2. Optimal Substructure
+            * The problem can be broken into subproblems, and the solution to the problem contains solutions to those subproblems.
+            * (This is also true for dynamic programming, but with greedy, we solve them by picking once without revisiting.)
+
+4. Advantages
+    * Simple and intuitive.
+    * Usually fast (better runtime than dynamic programming or exhaustive search).
+    * Easy to implement.
+
+5. Disadvantages
+    * Does not always guarantee the globally optimal solution.
+    * Works only for certain problems where greedy choice property holds.
+    * Requires proof/justification that the greedy approach works for the specific problem.
+
+6. Common Greedy Algorithm Problems
+    * Activity Selection Problem
+        - Schedule the maximum number of non-overlapping activities.
+        - Greedy choice: pick the activity that finishes earliest.
+
+    * Fractional Knapsack Problem
+        - Maximize value in a knapsack with fractional items allowed.
+        - Greedy choice: take items with the highest value-to-weight ratio first.
+
+    * Huffman Encoding
+        - Build optimal prefix-free codes.
+        - Greedy choice: merge the two smallest frequency nodes repeatedly.
+
+    * Minimum Spanning Tree (MST)
+        - Kruskal’s Algorithm (choose smallest edge that doesn’t form a cycle).
+        - Prim’s Algorithm (choose smallest edge connecting the tree to a new vertex).
+
+    * Dijkstra’s Algorithm (for shortest paths in weighted graphs with non-negative weights).
+
+7. Where Greedy Fails
+    * 0/1 Knapsack Problem
+        - You must take whole items (no fractions). Greedy fails because the best ratio item might prevent you from taking a better overall set.
+    * Coin Change Problem (with arbitrary denominations)
+        - Greedy may fail if coin values don’t allow optimal solutions (e.g., coins {1, 3, 4}, target = 6).
+
+
+8. Steps to Apply a Greedy Algorithm
+    1. Understand the problem structure – check if optimal substructure exists.
+    2. Define the greedy choice rule – what’s the "best choice at each step"?
+    3. Prove correctness (if possible).
+        - Exchange argument: show any optimal solution can be transformed into the greedy solution without reducing quality.
+        - Induction proof.
+    4. Implement: usually involves sorting or using a priority queue (heap).
+
+9. Complexity
+   * Most greedy algorithms run in O(n log n) due to sorting or heap usage.
+   * Some can be O(n) if no sorting is needed.
+
+
