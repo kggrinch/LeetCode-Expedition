@@ -70,4 +70,6 @@ Greedy Algorithm
    * Most greedy algorithms run in O(n log n) due to sorting or heap usage.
    * Some can be O(n) if no sorting is needed.
 
-
+10. Correlation with other algorithms
+    * All greedy algorithms are dynamic programming algorithms, but not all dynamic programming algorithms are greedy
+    * If an algorithm can be solved using dynamic programming then there is a chance a greedy approach might be able to optimize it but not guaranteed.
