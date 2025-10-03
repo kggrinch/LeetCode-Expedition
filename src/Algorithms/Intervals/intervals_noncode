@@ -1,0 +1,75 @@
+Intervals
+
+1. What are Intervals
+    - An interval usually represents a range between two numbers, written as [start, end].
+    - Common in scheduling, merging, ranges, reservations, etc
+    - Example:
+        * [1,3] means from 1 to 3.
+        * A list of intervals: [[1,3], [2,6], [8,10], [15,18]]
+
+2. Key Properties
+    - [Overlap]: Two intervals [a, b] and [c, d] overlap if a <= d && c <= b
+    - [Disjoint]: No overlap if b < c or d < a.
+    - [Sorting]: Sorting intervals by start is almost always the first step.
+
+3. Common Types of Interval Problems
+    - Merging Intervals
+        - Input: List of intervals.
+        - Task: Merge overlapping ones.
+        - Strategy:
+            1. Sort by start.
+            2. Traverse, and if current.start <= prev.end, merge (prev.end = max(prev.end, current.end)).
+            3. Else, add as a new interval.
+
+    - Inserting Intervals
+        - Insert a new interval into a sorted list and merge if needed.
+        - Strategy:
+            1. Add all intervals ending before newInterval.start
+            2. Merge overlaps with newInterval
+            3. Add remaining intervals
+
+    - Interval Scheduling
+        - Non-overlapping intervals → How many meetings can you attend?
+        - Strategy:
+            1. Sort by end
+            2. Use greedy: pick intervals with earliest finish time.
+
+    - Meeting Rooms
+        - Meeting rooms needed → How many overlaps exist?
+        - Strategy:
+            1. Use a min-heap of end times.
+            2. Or two-pointer sweep line with sorted start & end times.
+
+    - Interval Covering
+        - Example: Minimum intervals to cover [0, N].
+        - Strategy:
+            1. Greedy: always pick interval that extends coverage the farthest.
+            2. Sort by start, iterate while updating farthest reachable.
+
+    - Point in Interval
+        - Checking if a point lies in any interval.
+        - Can use binary search after sorting by start.
+
+4. Techniques for Spotting Interval Problems
+    - Look for keywords like: “range”, “schedule”, “meeting”, “overlap”, “time slots”, “cover”.
+    - If input is pairs like [start, end] or [[s1,e1], [s2,e2]...] → likely interval problem.
+    - If problem asks:
+        * "How many things can fit?" → non-overlapping / scheduling.
+        * "Do these overlap?" → merging / overlap check.
+        * "What’s the minimum/maximum number?" → greedy or heap approach.
+        * "Does a point/time belong?" → interval search / binary search.
+
+5. General Patterns / Algorithms
+    - Sorting: Usually sort by start or end.
+    - Greedy: Pick earliest ending interval for scheduling.
+    - Heap: Track active intervals (meeting rooms).
+    - Sweep Line (Two Pointers):
+        - Sort start & end arrays separately.
+        - Move through them with two pointers to count overlaps.
+
+6. Time Complexity
+    - Sorting intervals: O(n log n).
+    - Merging intervals: O(n log n) (because of sort).
+    - Inserting interval: O(n) (linear merge).
+    - Meeting rooms (heap): O(n log n).
+    - Sweep line: O(n log n) (due to sorting).
