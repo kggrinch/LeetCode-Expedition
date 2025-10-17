@@ -63,7 +63,7 @@ int hammingWeight_optimized(std::uint32_t n)
 int main()
 {
 
-    std::cout << hammingWeight_optimized(00000000000000000000000000001011) << "\n";
+    std::cout << hammingWeight_optimized(011) << "\n";
 
     return 0;
 }
