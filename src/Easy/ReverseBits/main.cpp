@@ -10,16 +10,16 @@ int reverseBits(std::uint32_t n)
     {
         // get the bit at position i, starts at beginning
         std::uint32_t position = n >> i;
-        std::uint32_t bit = position & 1;
+        std::uint32_t bit = position & 1; // extract lsb
 
         // place the retrieved bit at reverse position of i
-        std::uint32_t reverse_position = bit << (31 - i);
-        result = result | reverse_position;
+        std::uint32_t reverse_position = bit << (31 - i); // shift extracted a bit left to correct reverse position
+        result = result | reverse_position; // add extracted bit in correct position into the result
     }
     return result;
 }
 
 int main()
 {
-    std::cout << reverseBits( 00000000000000000000000000010101) << "\n";
+    std::cout << reverseBits( 1001) << "\n";
 }
