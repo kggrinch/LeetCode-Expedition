@@ -20,31 +20,30 @@
 // Cons: Requires nodes to use a continuous label like 0 = node 0, 1 = node 1
 void bfs_adjacency_list_standard(int start, std::vector<std::vector<int>>& adj)
 {
-    int vertices = adj.size();
+    int n = adj.size();
+    std::vector<bool> v(n, false);
+    std::deque<int> q;
 
-    std::vector<bool> visited(vertices, false);
-    std::deque<int> queue;
+    q.push_back(start);
+    v[start] = true;
 
-    queue.push_back(start);
-    visited[start] = true;
-
-    while(!queue.empty())
+    while (!q.empty())
     {
-        int node = queue.front();
-        queue.pop_front();
+        int node = q.front();
+        q.pop_front();
 
         std::cout << node << " ";
 
-        // Iterate through nodes neighbors
-        for(int neighbor : adj[node])
+        for (auto neighbor : adj[node])
         {
-            if(!visited[neighbor])
+            if (!v[neighbor])
             {
-                visited[neighbor] = true;
-                queue.push_back(neighbor);
+                q.push_back(neighbor);
+                v[neighbor] = true;
             }
         }
     }
+
 }
 
 // Secondly Implementation: Queue + Set
@@ -364,15 +363,16 @@ void dfs_grid_secondary_helper(std::pair<int, int> node, const std::vector<std::
 void dfs_adjacency_list_standard(int start, const std::vector<std::vector<int>>& adj)
 {
     int vertices = adj.size();
-    std::vector<bool> visited(vertices, false);
+    std::vector<int> visited(vertices, false);
 
     auto dfs = [&](int node, auto& dfs) -> void
     {
         visited[node] = true;
         std::cout << node << " ";
-        for(int neighbor : adj[node])
+
+        for (auto neighbor : adj[node])
         {
-            if(!visited[neighbor])
+            if (!visited[neighbor])
             {
                 dfs(neighbor, dfs);
             }
@@ -582,7 +582,7 @@ int main()
     std::cout << "Depth First Search\n\n";
 
     // Standard Implementation: Queue + Vector<bool>
-    std::cout << "(Graph - Adjacency List)(bfs)\n";
+    std::cout << "(Graph - Adjacency List)(dfs)\n";
     std::cout << "Standard Implementation: Queue + Vector<bool>\n";
     dfs_adjacency_list_standard(0, adj);
     std::cout << "\n\n";
