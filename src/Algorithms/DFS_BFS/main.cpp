@@ -190,33 +190,30 @@ void bfs_grid_standard(std::pair<int, int> start, std::vector<std::vector<int>>&
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses pairs but in a unique way where we retrieve the two values in the pair and uses them separately
 // Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
-void bfs_grid_secondary(std::pair<int, int> start, std::vector<std::vector<int>>& grid)
+void bfs_grid_secondary(std::pair<int, int> start, std::vector<std::vector<int>> grid)
 {
     int r = grid.size();
     int c = grid[0].size();
+    std::set<std::pair<int, int>> visited;
+    std::vector<std::pair<int, int>> directions {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
+    std::deque<std::pair<int, int>> queue;
 
-    std::deque<std::pair<int, int>> q;
-    std::set<std::pair<int, int>> visited; // requires default set (cannot use unordered because cannot hash pair)
-    std::vector<std::pair<int, int>> directions = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
-
-    q.push_back(start);
+    queue.push_back(start);
     visited.insert(start);
-
-    while(!q.empty())
+    while (!queue.empty())
     {
-        const auto& [c_row, c_col] = q.front();
-        q.pop_front();
+        std::pair<int, int> node = queue.front();
+        queue.pop_front();
 
-        std::cout << "(" << c_row << ", " << c_col << ") ";
+        std::cout << "(" << node.first << ", " << node.second << ") ";
 
-        for(const auto& [d_row, d_col] : directions)
+        for (std::pair<int, int> d_node : directions)
         {
-            int n_row = c_row + d_row;
-            int n_col = c_col + d_col;
-            if(n_row >= 0 && n_col >= 0 && n_row < c && n_col < r && grid[n_row][n_col] && !visited.contains({n_row, n_col}))
+            std::pair<int, int> n_node(node.first + d_node.first, node.second + d_node.second);
+            if (n_node.first >= 0 && n_node.second >= 0 && n_node.first < r && n_node.second < c && grid[n_node.first][n_node.second] && visited.count(n_node) != 1)
             {
-                q.push_back({n_row, n_col});
-                visited.insert({n_row, n_col});
+                queue.push_back(n_node);
+                visited.insert(n_node);
             }
         }
     }
@@ -458,10 +455,11 @@ void dfs_grid_standard(std::pair<int, int> start, const std::vector<std::vector<
 // Cons: Requires more memory and not default implementation. Requires organized set
 // Note: This implementation uses the 2nd design
 // Note: C++20 and below do not offer the .contains function on sets therefore use .count != 1 to check if the element exits in a set
-void dfs_grid_secondary(std::pair<int, int> start, const std::vector<std::vector<int>>& grid)
+void dfs_grid_secondary(std::pair<int, int> start, std::vector<std::vector<int>> grid)
 {
     int r = grid.size();
     int c = grid[0].size();
+
     std::set<std::pair<int, int>> visited;
     std::vector<std::pair<int, int>> directions = {{0, -1}, {-1, 0}, {0, 1}, {1, 0}};
 
@@ -470,10 +468,10 @@ void dfs_grid_secondary(std::pair<int, int> start, const std::vector<std::vector
         visited.insert(node);
         std::cout << "(" << node.first << ", " << node.second << ") ";
 
-        for(std::pair<int, int> d_node : directions)
+        for (std::pair<int, int> d_node : directions)
         {
-            std::pair<int, int> n_node({node.first + d_node.first, node.second + d_node.second});
-            if(n_node.first >= 0 && n_node.second >= 0 && n_node.first < r && n_node.second < c && grid[n_node.first][n_node.second] && !visited.contains(n_node))
+            std::pair<int, int> n_node(node.first + d_node.first, node.second + d_node.second);
+            if (n_node.first >= 0 && n_node.second >= 0 && n_node.first < r && n_node.second < c && grid[n_node.first][n_node.second] && visited.count(n_node) != 1)
             {
                 dfs(n_node, dfs);
             }

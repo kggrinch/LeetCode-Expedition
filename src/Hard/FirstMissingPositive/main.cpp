@@ -22,7 +22,7 @@ int firstMissingPositive(std::vector<int>& nums)
 
 int firstMissingPositive_optimized(std::vector<int>& nums)
 {
-    
+
 }
 
 
