@@ -14,6 +14,8 @@ struct TreeNode
 // Std::vector<int> vector(first iterator, last iterator);
 // includes first and everything up to last iterator not including the last iterator.
 
+// Time Complexity: O(n^2) - O(2n) per recursive algorithm and in worse case the recursion goes n deep so its O(n^2) for O(n) per recusion call.
+// Space Complexity: O(n)
 TreeNode* buildTree(std::vector<int>& preorder, std::vector<int>& inorder)
 {
     if (preorder.empty() || inorder.empty()) return nullptr;
@@ -31,8 +33,8 @@ TreeNode* buildTree(std::vector<int>& preorder, std::vector<int>& inorder)
 
 int main()
 {
-    std::vector<int> preorder = {3,9,20,15,7};
-    std::vector<int> inorder = {9,3,15,20,7};
+    std::vector<int> preorder = {6, 3, 2, 7, 1, 4, 5, 3};
+    std::vector<int> inorder = {7, 2, 3, 1, 6, 5, 4, 3};
     TreeNode* root = buildTree(preorder, inorder);
     return 0;
 }
