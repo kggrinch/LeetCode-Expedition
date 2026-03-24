@@ -41,17 +41,6 @@ std::string longestPalindrome(std::string s)
     return result;
 }
 
-// aba
-// l = 0
-// r = 2
-// i = 1
-
-// length = r - l + 1
-//        = 2 - 0 + 1
-
-
-
-
 
 int main()
 {
