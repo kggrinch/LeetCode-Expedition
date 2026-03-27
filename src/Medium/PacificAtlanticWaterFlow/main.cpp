@@ -54,6 +54,14 @@ std::vector<std::vector<int>> pacificAtlantic(std::vector<std::vector<int>>& hei
     }
     return result;
 }
+
+std::vector<std::vector<int>> pacificAtlantic_optimized(std::vector<std::vector<int>>& heights)
+{
+
+}
+
+
+
 // (0, 0)
 // (r, c)
 
