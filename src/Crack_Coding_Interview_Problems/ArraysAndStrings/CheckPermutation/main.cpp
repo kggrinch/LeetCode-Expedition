@@ -29,9 +29,9 @@ bool CheckPermutation(const std::string& s1, const std::string& s2)
         unsigned int val = c;
         s1_freq[val]++;
     }
-    for (int i = 0; i < s2.size(); i++)
+    for (const char& c : s2)
     {
-        unsigned int val = s2[i];
+        unsigned int val = c;
         s1_freq[val]--;
         if (s1_freq[val] < 0) return false;
     }
@@ -68,10 +68,6 @@ void test()
     else {std::cout << "All Tests Passed!!\n";}
 
 }
-
-
-
-
 
 
 int main()
