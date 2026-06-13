@@ -6,9 +6,9 @@
 //          perform this operation in place.)
 
 // Example: Input:  "Mr John Smith    ", 13
-//          Output: ""Mr%20John%20Smith
+//          Output: "Mr%20John%20Smith"
 
-// Example 2: Input: "  Hello Partner  ", 13
+// Example 2: Input: "Hello Partner   ", 13
 //            Output: "Hello%20Partner"
 
 // Approach
@@ -57,7 +57,7 @@ void URLify_optimized(std::string& s, const int& true_length)
         if (s[i] == ' ') space_count++;
     }
 
-    int index = true_length + space_count * 2;
+    int index = true_length + space_count * 2; // finds the exact index to end
     for (int i = true_length - 1; i >= 0; i--)
     {
         if (s[i] == ' ')
@@ -76,11 +76,31 @@ void URLify_optimized(std::string& s, const int& true_length)
 }
 
 
+void URLify_optimized_brute_force(std::string& s, const int& true_length)
+{
+    int index = s.length() - 1; // assumes the buffer is made to fit word
+    for (int i = true_length - 1; i >= 0; i--)
+    {
+        if (s[i] == ' ')
+        {
+            s[index] = '0';
+            s[--index] = '2';
+            s[--index] = '%';
+        }
+        else
+        {
+            s[index] = s[i];
+        }
+        index--;
+    }
+}
+
+
 
 
 int main()
 {
-    std::string s = "Mr John Smith      ";
+    std::string s = "Mr John Smith    ";
     int length = 13;
     std::cout << "string before: " << s << "\n";
     URLify_optimized(s, length);
