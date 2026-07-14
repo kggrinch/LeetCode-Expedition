@@ -65,22 +65,6 @@ bool OneAway(std::string a, std::string b)
     return true;
 }
 
-bool compare(const bool& output, const bool& expected)
-{
-    return output == expected;
-}
-
-bool runTest(const int& testNum, const bool& output, const bool& expected)
-{
-    if (compare(output, expected))
-    {
-        std::cout << "Test " << testNum << " Passed\n";
-        return true;
-    }
-    std::cout << "Test " << testNum << " Failed (Expected: " << expected << " Output: " << output << "\n";
-    return false;
-}
-
 
 // Optimized solution helper function
 bool oneEditReplace(std::string s1, std::string s2)
@@ -118,13 +102,12 @@ bool oneEditinsert(std::string s1, std::string s2)
 }
 
 
-
 // Optimized Solution
 // Time Complexity: O(n)
 // Space Complexity: O(1)
 bool OneAwayOptimized(std::string first, std::string second)
 {
-    if (first.length()== second.length()) {
+    if (first.length() == second.length()) {
         return oneEditReplace(first, second);
     } else if (first.length()+ 1 == second.length()) {
         return oneEditinsert(first, second);
@@ -136,7 +119,21 @@ bool OneAwayOptimized(std::string first, std::string second)
 }
 
 
+bool compare(const bool& output, const bool& expected)
+{
+    return output == expected;
+}
 
+bool runTest(const int& testNum, const bool& output, const bool& expected)
+{
+    if (compare(output, expected))
+    {
+        std::cout << "Test " << testNum << " Passed\n";
+        return true;
+    }
+    std::cout << "Test " << testNum << " Failed (Expected: " << expected << " Output: " << output << "\n";
+    return false;
+}
 
 bool runSimple()
 {
