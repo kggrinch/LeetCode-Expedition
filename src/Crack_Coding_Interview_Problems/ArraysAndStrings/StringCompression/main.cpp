@@ -44,6 +44,25 @@ bool compressionNeeded(const std::string& s)
     return true;
 }
 
+void replace(char& cur_char, int& char_count, int cur_index, const std::string& orig_string, std::string& new_s)
+{
+    // Save cur char count and new replacement
+    int cur_char_count = char_count;
+    std::string replacement = cur_char + std::to_string(cur_char_count);
+
+    if (cur_index < orig_string.size())
+    {
+        // change to new letter before string modifications
+        cur_char = orig_string[cur_index];
+        char_count = 1; // update this to 0 and redu th indexing
+    }
+
+    // deal with cur letter attributes (index at new letter)
+    new_s += replacement;
+}
+
+// Time Complexity: O(n)
+// Space Complexity: O(1)
 std::string stringCompression(std::string& s)
 {
     // Check if compression need
@@ -59,26 +78,16 @@ std::string stringCompression(std::string& s)
     {
         if (cur_char != s[i])
         {
-            // Save cur char count and new replacement
-            int cur_char_count = char_count;
-            std::string replacement = cur_char + std::to_string(cur_char_count);
 
-            // change to new letter before string modifications
-            cur_char = s[i];
-            char_count = 1; // update this to 0 and redu th eindexing
-
-            // deal with cur letter attributes (index at new letter)
-            new_s += replacement;
-            // s.replace(cur_char_index, cur_char_count, replacement);
-
-            // update indexing
-            cur_char_index = i; // next cur char is at the next index position after update
+            replace(cur_char, char_count, i, s, new_s);
         }
         else
         {
             char_count++;
         }
     }
+
+    replace(cur_char, char_count, orig_size, s, new_s);
 
     return new_s;
 }
@@ -120,9 +129,6 @@ void runTestSuite()
 {
     testSimple();
 }
-
-
-
 
 int main()
 {
